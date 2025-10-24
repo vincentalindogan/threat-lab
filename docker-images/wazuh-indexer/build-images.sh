@@ -71,7 +71,7 @@ build() {
         --build-arg FILEBEAT_TEMPLATE_BRANCH=$FILEBEAT_TEMPLATE_BRANCH \
         --build-arg WAZUH_FILEBEAT_MODULE=$WAZUH_FILEBEAT_MODULE \
         --build-arg WAZUH_UI_REVISION=$WAZUH_UI_REVISION \
-        -t wazuh/test-indexer:latest .
+        -t wazuh/indexer:latest .
 
     return 0
 }
