@@ -1,2 +1,2 @@
 # threat-lab
-Test lab for threat detection and response
+Test lab for threat detection and response, leveraging Wazuh
