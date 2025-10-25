@@ -1,5 +1,5 @@
 nodes:
   # Wazuh indexer server nodes
   indexer:
-    - name: demo.indexer
-      ip: demo.indexer
+    - name: index-1
+      ip: indexer-1.wazuh-indexer.default.svc.cluster.local

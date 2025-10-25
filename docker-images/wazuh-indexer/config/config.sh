@@ -18,12 +18,13 @@ export BASE_DIR=${NAME}-*
 export INDEXER_FILE=wazuh-indexer-base.tar.xz
 export BASE_FILE=wazuh-indexer-base-${VERSION}-linux-x64.tar.xz
 export REPO_DIR=/unattended_installer
+export WAZUH_PACKAGE_VERSION=4.14
 
 ## Variables
 CERT_TOOL=wazuh-certs-tool.sh
 PASSWORD_TOOL=wazuh-passwords-tool.sh
-PACKAGES_URL=https://packages.wazuh.com/5.0/
-PACKAGES_DEV_URL=https://packages-dev.wazuh.com/5.0/
+PACKAGES_URL=https://packages.wazuh.com/$WAZUH_PACKAGE_VERSION/
+PACKAGES_DEV_URL=https://packages-dev.wazuh.com/$WAZUH_PACKAGE_VERSION/
 
 ## Check if the cert tool exists in S3 buckets
 CERT_TOOL_PACKAGES=$(curl --silent -I $PACKAGES_URL$CERT_TOOL | grep -E "^HTTP" | awk  '{print $2}')
@@ -79,16 +80,18 @@ cp -pr /action_groups.yml ${TARGET_DIR}${INSTALLATION_DIR}/opensearch-security/
 cp -pr /internal_users.yml ${TARGET_DIR}${INSTALLATION_DIR}/opensearch-security/
 cp -pr /opensearch.yml ${TARGET_DIR}${CONFIG_DIR}
 # Copy Wazuh indexer's certificates
-cp -pr /wazuh-certificates/demo.indexer.pem ${TARGET_DIR}${CONFIG_DIR}/certs/indexer.pem
-cp -pr /wazuh-certificates/demo.indexer-key.pem ${TARGET_DIR}${CONFIG_DIR}/certs/indexer-key.pem
+cp -pr /wazuh-certificates/index-1.pem ${TARGET_DIR}${CONFIG_DIR}/certs/indexer.pem
+cp -pr /wazuh-certificates/index-1-key.pem ${TARGET_DIR}${CONFIG_DIR}/certs/indexer-key.pem
 cp -pr /wazuh-certificates/root-ca.key ${TARGET_DIR}${CONFIG_DIR}/certs/root-ca.key
 cp -pr /wazuh-certificates/root-ca.pem ${TARGET_DIR}${CONFIG_DIR}/certs/root-ca.pem
 cp -pr /wazuh-certificates/admin.pem ${TARGET_DIR}${CONFIG_DIR}/certs/admin.pem
 cp -pr /wazuh-certificates/admin-key.pem ${TARGET_DIR}${CONFIG_DIR}/certs/admin-key.pem
 
 # Delete xms and xmx parameters in jvm.options
-sed '/-Xms/d' -i /etc/wazuh-indexer/jvm.options
-sed '/-Xmx/d' -i /etc/wazuh-indexer/jvm.options
+#sed '/-Xms/d' -i /etc/wazuh-indexer/jvm.options
+#sed '/-Xmx/d' -i /etc/wazuh-indexer/jvm.options
+sed -i 's/^-Xms.*/-Xms2g/' /etc/wazuh-indexer/jvm.options
+sed -i 's/^-Xmx.*/-Xmx2g/' /etc/wazuh-indexer/jvm.options
 sed -i 's/-Djava.security.policy=file:\/\/\/etc\/wazuh-indexer\/opensearch-performance-analyzer\/opensearch_security.policy/-Djava.security.policy=file:\/\/\/usr\/share\/wazuh-indexer\/opensearch-performance-analyzer\/opensearch_security.policy/g' /etc/wazuh-indexer/jvm.options
 
 
