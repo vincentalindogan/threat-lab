@@ -1,5 +1,8 @@
 nodes:
   # Wazuh indexer server nodes
   indexer:
-    - name: index-1
-      ip: indexer-1.wazuh-indexer.default.svc.cluster.local
+    - name: wazuh-indexer-0
+      ip: wazuh-indexer-0.wazuh-indexer.default.svc.cluster.local
+  dashboard:
+    - name: wazuh-dashboard
+      ip: wazuh-dashboard.default.svc.cluster.local

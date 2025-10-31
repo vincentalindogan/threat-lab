@@ -1,0 +1,40 @@
+nodes:
+  # Wazuh indexer nodes
+  indexer:
+    - name: wazuh-indexer-0
+      ip: "wazuh-indexer-0.wazuh-indexer-hs.wazuh.svc.cluster.local"
+      dns_sans:
+        - wazuh-indexer-0
+        - wazuh-indexer-0.wazuh-indexer-hs
+        - wazuh-indexer-0.wazuh-indexer-hs.wazuh.svc
+        - wazuh-indexer-0.wazuh-indexer-hs.wazuh.svc.cluster.local
+      ip_sans:
+        - 127.0.0.1
+        - localhost
+  # Wazuh server nodes
+  # If there is more than one Wazuh server
+  # node, each one must have a node_type
+  server:
+    - name: manager-0
+      ip: "manager-0.wazuh-manager-hs.wazuh.svc.cluster.local"
+      dns_sans:
+        - manager-0
+        - manager-0.wazuh-manager-hs
+        - manager-0.wazuh-manager-hs.wazuh.svc
+        - manager-0.wazuh-manager-hs.wazuh.svc.cluster.local
+      ip_sans:
+        - 127.0.0.1
+        - localhost
+
+  # Wazuh dashboard nodes
+  dashboard:
+    - name: dashboard
+      ip: "dashboard.wazuh-dashboard.wazuh.svc.cluster.local"
+      dns_sans:
+        - dashboard
+        - dashboard.wazuh-dashboard
+        - dashboard.wazuh-dashboard.wazuh.svc
+        - dashboard.wazuh-dashboard.wazuh.svc.cluster.local
+      ip_sans:
+        - 127.0.0.1
+        - localhost
